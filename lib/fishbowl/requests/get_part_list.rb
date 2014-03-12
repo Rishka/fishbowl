@@ -14,21 +14,21 @@ module Fishbowl::Requests
       envelope(Nokogiri::XML::Builder.new do |xml|
         xml.request {
           xml.GetPartListRq {
-            xml.PartNum unless @part_num.nil?
-            xml.PartDesc unless @part_desc.nil?
-            xml.PartDetails unless @part_details.nil?
-            xml.PartUPC unless @part_upc.nil?
-            xml.PartType unless @part_type.nil?
-            xml.ABCCode unless @abc_code.nil?
-            xml.VendorName unless @vendor_name.nil?
-            xml.VendorNum unless @vendor_num.nil?
-            xml.ProductNum unless @product_num.nil?
-            xml.ProductDesc unless @product_desc.nil?
-            xml.Active unless @active.nil?
-            xml.ShowActive unless @show_active.nil?
-            xml.ShowInactive unless @show_inactive.nil?
-            xml.HasBOM unless @has_bom.nil?
-            xml.Configurable unless @configurable.nil?
+            xml.PartNum @part_num unless @part_num.nil?
+            xml.PartDesc @part_desc unless @part_desc.nil?
+            xml.PartDetails @part_details unless @part_details.nil?
+            xml.PartUPC @part_upc unless @part_upc.nil?
+            xml.PartType @part_type unless @part_type.nil?
+            xml.ABCCode @abc_code unless @abc_code.nil?
+            xml.VendorName @vendor_name unless @vendor_name.nil?
+            xml.VendorNum @vendor_num unless @vendor_num.nil?
+            xml.ProductNum @product_num unless @product_num.nil?
+            xml.ProductDesc @product_desc unless @product_desc.nil?
+            xml.Active @active unless @active.nil?
+            xml.ShowActive @show_active unless @show_active.nil?
+            xml.ShowInactive @show_inactive unless @show_inactive.nil?
+            xml.HasBOM @has_bom unless @has_bom.nil?
+            xml.Configurable @configurable unless @configurable.nil?
           }
         }
       end)
@@ -37,7 +37,7 @@ module Fishbowl::Requests
   protected
 
     def distill(response_doc)
-      #response_doc.xpath('//Customer').map { |n| Fishbowl::Objects::Customer.from_xml(n) }
+      response_doc.xpath('//LightPart').map { |n| Fishbowl::Objects::LightPart.from_xml(n) }
     end
 
   end
