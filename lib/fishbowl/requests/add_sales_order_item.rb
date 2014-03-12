@@ -13,7 +13,11 @@ module Fishbowl::Requests
       envelope(Nokogiri::XML::Builder.new do |xml|
         xml.request {
           xml.AddSOItemRq {
-            @sales_order.nil? ? (xml.OrderNum @order_number) : (xml.SalesOrder @sales_order)
+            if @sales_order.nil?
+              xml.OrderNum @order_number
+            else
+              xml << @sales_order.to_xml.to_xml
+            end
             xml << @sales_order_item.to_xml.to_xml
           }
         }
