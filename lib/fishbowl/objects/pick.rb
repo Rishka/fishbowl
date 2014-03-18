@@ -6,28 +6,6 @@ require 'fishbowl/objects/tag'
 require 'fishbowl/objects/tracking'
 
 module Fishbowl::Objects
-  class Pick
-    include ROXML
-
-    xml_name 'Pick'
-    xml_accessor :db_id, :from => 'PickID', :as => Integer
-    xml_accessor :number, :from => 'Number'
-    xml_accessor :type, :from => 'Type'
-    xml_accessor :type_id, :from => 'TypeID', :as => Integer
-    xml_accessor :status, :from => 'Status'
-    xml_accessor :status_id, :from => 'StatusID', :as => Integer
-    xml_accessor :priority, :from => 'Priority'
-    xml_accessor :priority_id, :from => 'PriorityID', :as => Integer
-    xml_accessor :location_group_id, :from => 'LocationGroupID', :as => Integer
-    xml_accessor :date_last_modified, :from => 'DateLastModified'
-    xml_accessor :date_scheduled, :from => 'DateScheduled'
-    xml_accessor :date_created, :from => 'DateCreated'
-    xml_accessor :date_started, :from => 'DateStarted'
-    xml_accessor :date_finished, :from => 'DateFinished'
-    xml_accessor :user_name, :from => 'UserName'
-    xml_accessor :pick_orders, :from => 'PickOrder', :as => [PickOrder], :in => 'PickOrders'
-    xml_accessor :pick_items, :from => 'PickItem', :as => [PickItem], :in => 'PickItems'
-  end
 
   class PickOrder
     include ROXML
@@ -38,6 +16,12 @@ module Fishbowl::Objects
     xml_accessor :order_id, :from => 'OrderID', :as => Integer
     xml_accessor :order_to, :from => 'OrderTo'
     xml_accessor :note, :from => 'Note'
+  end
+
+  class DestinationTag
+    include ROXML
+
+    xml_accessor :tag, :from => 'Tag', :as => Tag
   end
 
   class PickItem
@@ -62,10 +46,27 @@ module Fishbowl::Objects
     xml_accessor :pick_item_type, :from => 'PickItemType'
   end
 
-  class DestinationTag
+  class Pick
     include ROXML
 
-    xml_accessor :tag, :from => 'Tag', :as => Tag
+    xml_name 'Pick'
+    xml_accessor :db_id, :from => 'PickID', :as => Integer
+    xml_accessor :number, :from => 'Number'
+    xml_accessor :type, :from => 'Type'
+    xml_accessor :type_id, :from => 'TypeID', :as => Integer
+    xml_accessor :status, :from => 'Status'
+    xml_accessor :status_id, :from => 'StatusID', :as => Integer
+    xml_accessor :priority, :from => 'Priority'
+    xml_accessor :priority_id, :from => 'PriorityID', :as => Integer
+    xml_accessor :location_group_id, :from => 'LocationGroupID', :as => Integer
+    xml_accessor :date_last_modified, :from => 'DateLastModified'
+    xml_accessor :date_scheduled, :from => 'DateScheduled'
+    xml_accessor :date_created, :from => 'DateCreated'
+    xml_accessor :date_started, :from => 'DateStarted'
+    xml_accessor :date_finished, :from => 'DateFinished'
+    xml_accessor :user_name, :from => 'UserName'
+    xml_accessor :pick_orders, :from => 'PickOrder', :as => [PickOrder], :in => 'PickOrders'
+    xml_accessor :pick_items, :from => 'PickItem', :as => [PickItem], :in => 'PickItems'
   end
 
 end
