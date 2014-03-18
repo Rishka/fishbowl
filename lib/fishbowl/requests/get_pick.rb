@@ -26,7 +26,7 @@ module Fishbowl::Requests
     end
 
     def distill(response_doc)
-      xml = response_doc.at_xpath('//GetPickRs')
+      xml = response_doc.at_xpath('//Pick')
       Fishbowl::Objects::Pick.from_xml(xml) if xml
     end
 
