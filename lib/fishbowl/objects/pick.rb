@@ -27,7 +27,7 @@ module Fishbowl::Objects
   class PickItem
     include ROXML
 
-    xml_accessor :pick_item_id, :from => 'PickItemID', :as => Integer
+    xml_accessor :db_id, :from => 'PickItemID', :as => Integer
     xml_accessor :status, :from => 'Status'
     xml_accessor :part, :from => 'Part', :as => Part
     xml_accessor :tag, :from => 'Tag', :as => Tag
