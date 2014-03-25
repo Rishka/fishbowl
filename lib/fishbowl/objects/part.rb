@@ -1,5 +1,6 @@
 require 'roxml'
 require 'fishbowl/objects/uom'
+require 'fishbowl/objects/tracking'
 
 module Fishbowl::Objects
   class Part
@@ -25,6 +26,8 @@ module Fishbowl::Objects
     xml_accessor :height, :from => 'Height'
     xml_accessor :len, :from => 'Len'
     xml_accessor :size_uom, :from => 'SizeUOM', :as => SizeUOM
+    xml_accessor :upc, :from => 'UPC'
+    xml_accessor :part_tracking_list, :from => 'PartTrackingList', :as => PartTrackingList
   end
 
   class LightPart

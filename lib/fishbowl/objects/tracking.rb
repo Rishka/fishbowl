@@ -46,7 +46,7 @@ module Fishbowl::Objects
   class TrackingItem
     include ROXML
 
-    xml_accessor :part_tracking, :from => 'PartTracking', :as => PartTracking
+    xml_accessor :part_tracking, :from => 'PartTracking', :as => [PartTracking]
     xml_accessor :tracking_value, :from => 'TrackingValue'
     xml_accessor :serial_box_list, :from => 'SerialBoxList', :as => SerialBoxList
   end
@@ -55,6 +55,13 @@ module Fishbowl::Objects
     include ROXML
 
     xml_accessor :item, :from => 'TrackingItem', :as => TrackingItem
+  end
+
+  class PartTrackingList
+    include ROXML
+
+    xml_name 'PartTrackingList'
+    xml_accessor :part_tracking, :from => 'PartTracking', :as => [PartTracking]
   end
 
 end
