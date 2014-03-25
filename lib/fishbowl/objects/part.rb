@@ -20,7 +20,7 @@ module Fishbowl::Objects
     xml_accessor :serialized?, :from => 'SerializedFlag'
     xml_accessor :tracking?, :from => 'TrackingFlag'
     xml_accessor :weight, :from => 'Weight', :as => Float
-    xml_accessor :weight_uoms, :from => 'WeightUOM/UOM', :as => [UOM]
+    xml_accessor :weight_uoms, :from => 'WeightUOM', :as => [WeightUOM]
   end
 
   class LightPart
