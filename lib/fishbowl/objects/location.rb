@@ -29,6 +29,8 @@ module Fishbowl::Objects
     xml_accessor :location_group_name, :from => 'LocationGroupName'
     xml_accessor :enforce_tracking?, :from => 'EnforceTracking'
     xml_accessor :sort_order, :from => 'SortOrder', :as => Integer
+    xml_accessor :tag_id, :from => 'TagID', :as => Integer
+    xml_accessor :tag_number, :from => 'TagNumber', :as => Integer
   end
 
 end

@@ -41,6 +41,7 @@ module Fishbowl::Objects
     xml_accessor :sort_order, :from => 'SortOrder', :as => Integer
     xml_accessor :tracking_type_id, :from => 'TrackingTypeID', :as => Integer
     xml_accessor :active?, :from => 'Active'
+    xml_accessor :primary?, :from => 'Primary'
   end
 
   class TrackingItem
