@@ -39,4 +39,11 @@ module Fishbowl::Objects
     xml_accessor :uoms, :from => 'UOM', :as => [UOM]
   end
 
+  class SizeUOM
+    include ROXML
+
+    xml_name 'SizeUOM'
+    xml_accessor :uoms, :from => 'UOM', :as => [UOM]
+  end
+
 end
