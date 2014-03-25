@@ -13,6 +13,12 @@ module Fishbowl::Objects
     xml_accessor :to_uom_is_integral?, :from => 'ToUOMIsIntegral'
   end
 
+  class UOMConversions
+    include ROXML
+
+    xml_accessor :conversions, :from => 'UOMConversion', :as => [UOMConversion]
+  end
+
   class UOM
     include ROXML
 
@@ -23,7 +29,7 @@ module Fishbowl::Objects
     xml_accessor :integral?, :from => 'Integral'
     xml_accessor :active?, :from => 'Active'
     xml_accessor :type, :from => 'Type'
-    xml_accessor :conversions, :from => 'UOMConversions', :as => [UOMConversion]
+    xml_accessor :uom_conversions, :from => 'UOMConversions', :as => [UOMConversions]
   end
 
   class WeightUOM
