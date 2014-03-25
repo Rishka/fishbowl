@@ -2,13 +2,6 @@ require 'roxml'
 
 module Fishbowl::Objects
 
-  class WeightUOM
-    include ROXML
-
-    xml_name 'WeightUOM'
-    xml_accessor :uoms, :from => 'UOM', :as => [UOM]
-  end
-
   class UOMConversion
     include ROXML
 
@@ -31,6 +24,13 @@ module Fishbowl::Objects
     xml_accessor :active?, :from => 'Active'
     xml_accessor :type, :from => 'Type'
     xml_accessor :conversions, :from => 'UOMConversions', :as => [UOMConversion]
+  end
+
+  class WeightUOM
+    include ROXML
+
+    xml_name 'WeightUOM'
+    xml_accessor :uoms, :from => 'UOM', :as => [UOM]
   end
 
 end
