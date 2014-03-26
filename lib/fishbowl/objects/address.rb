@@ -1,4 +1,5 @@
 require 'roxml'
+require 'fishbowl/objects/sales_order'
 
 module Fishbowl::Objects
 
@@ -60,27 +61,8 @@ module Fishbowl::Objects
     xml_accessor :address_information, :from => 'AddressInformation', :as => [AddressInformation], :in => 'AddressInformationList'
   end
 
-  class RemitTo
-    include ROXML
-
+  class RemitTo < CustomerAddress
     xml_name 'RemitTo'
-    xml_accessor :name, :from => 'Name'
-    xml_accessor :address_field, :from => 'AddressField'
-    xml_accessor :city, :from => 'City'
-    xml_accessor :zip, :from => 'Zip'
-    xml_accessor :country, :from => 'Country', :as => Country
-    xml_accessor :state, :from => 'State', :as => State
   end
 
-  class Ship
-    include ROXML
-
-    xml_name 'Ship'
-    xml_accessor :name, :from => 'Name'
-    xml_accessor :address_field, :from => 'AddressField'
-    xml_accessor :city, :from => 'City'
-    xml_accessor :zip, :from => 'Zip'
-    xml_accessor :country, :from => 'Country', :as => Country
-    xml_accessor :state, :from => 'State', :as => State
-  end
 end
