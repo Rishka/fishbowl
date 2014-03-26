@@ -55,6 +55,7 @@ module Fishbowl::Objects
   class Tracking
     include ROXML
 
+    xml_name 'Tracking'
     xml_accessor :item, :from => 'TrackingItem', :as => TrackingItem
   end
 
