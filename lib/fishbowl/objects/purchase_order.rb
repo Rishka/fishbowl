@@ -20,8 +20,8 @@ module Fishbowl::Objects
     xml_accessor :note, :from => 'Note'
     xml_accessor :unit_cost, :from => 'UnitCost', :as => Float
     xml_accessor :quick_books_class_name, :from => 'QuickBooksClassName'
-    xml_accessor :revision_level, :as => 'RevisionLevel'
-    xml_accessor :scheduled_fulfillment_date, :as => 'ScheduledFulfillmentDate'
+    xml_accessor :revision_level, :from => 'RevisionLevel'
+    xml_accessor :scheduled_fulfillment_date, :from => 'ScheduledFulfillmentDate'
   end
 
   class PurchaseOrder
