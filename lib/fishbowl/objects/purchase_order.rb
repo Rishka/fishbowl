@@ -39,7 +39,7 @@ module Fishbowl::Objects
     xml_accessor :ship, :from => 'Ship', :as => Ship
     xml_accessor :deliver_to, :from => 'DeliverTo'
     xml_accessor :shipping_cost, :from => 'ShippingCost', :as => Float
-    xml_accessor :shipping_terms, :from => 'ShippingTerms', :as => Int
+    xml_accessor :shipping_terms, :from => 'ShippingTerms', :as => Integer
     xml_accessor :payment_terms, :from => 'PaymentTerms'
     xml_accessor :fob, :from => 'FOB'
     xml_accessor :vendor_contact, :from => 'VendorContact'
