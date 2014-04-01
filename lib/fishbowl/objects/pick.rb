@@ -28,7 +28,7 @@ module Fishbowl::Objects
     include ROXML
 
     xml_accessor :db_id, :from => 'PickItemID', :as => Integer
-    xml_accessor :status, :from => 'Status'
+    xml_accessor :status, :from => 'Status', :as => Integer
     xml_accessor :part, :from => 'Part', :as => Part
     xml_accessor :tag, :from => 'Tag', :as => Tag
     xml_accessor :quantity, :from => 'Quantity'

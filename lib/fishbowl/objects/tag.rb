@@ -14,7 +14,7 @@ module Fishbowl::Objects
     xml_accessor :quantity_commited, :from => 'QuantityCommitted'
     xml_accessor :wo_num, :from => 'WONum'
     xml_accessor :date_created, :from => 'DateCreated'
-    xml_accessor :tracking, :from => 'Tracking', :as => Location
+    xml_accessor :tracking, :from => 'Tracking', :as => Tracking
     xml_accessor :type_id, :from => 'TypeID', :as => Integer
     xml_accessor :account_id, :from => 'AccountID', :as => Integer
   end
