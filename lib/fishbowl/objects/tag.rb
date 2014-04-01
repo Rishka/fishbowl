@@ -9,6 +9,7 @@ module Fishbowl::Objects
     xml_accessor :db_id, :from => 'TagID', :as => Integer
     xml_accessor :num, :from => 'Num'
     xml_accessor :part_num, :from => 'PartNum'
+    xml_accessor :part_id, :from => 'PartID', :as => Integer
     xml_accessor :location, :from => 'Location', :as => Location
     xml_accessor :quantity, :from => 'Quantity'
     xml_accessor :quantity_committed, :from => 'QuantityCommitted'
