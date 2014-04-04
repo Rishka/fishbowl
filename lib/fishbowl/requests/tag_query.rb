@@ -25,7 +25,7 @@ module Fishbowl::Requests
     def validate
     end
 
-    def distill(response)
+    def distill(response_doc)
       response_doc.xpath('//Tag').map { |n| Fishbowl::Objects::Tag.from_xml(n) }
     end
 
