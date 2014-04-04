@@ -20,8 +20,8 @@ module Fishbowl::Requests
   protected
 
     def distill(response_doc)
-      part = response_doc.at_xpath('//Tag')
-      Fishbowl::Objects::Part.from_xml(tag) if tag
+      xml = response_doc.at_xpath('//Tag')
+      Fishbowl::Objects::Part.from_xml(xml) if xml
     end
 
   end
