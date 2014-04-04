@@ -19,6 +19,12 @@ module Fishbowl::Requests
 
   protected
 
+    def validate
+      %w{part_num location_group}.each do |field|
+        raise "Missing field: #{field}" if field.nil?
+      end
+    end
+
     def distill(response_doc)
       xml = response_doc.at_xpath('//Tag')
       Fishbowl::Objects::Part.from_xml(xml) if xml
