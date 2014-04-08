@@ -33,7 +33,7 @@ module Fishbowl::Objects
     xml_accessor :created_date, :from => 'CreatedDate'
     xml_accessor :first_ship_date, :from => 'FirstShipDate'
     xml_accessor :number, :from => 'Number'
-    xml_accessor :status, :from => 'Status', :as => Integer
+    xml_accessor :status, :from => 'Status'
     xml_accessor :buyer, :from => 'Buyer'
     xml_accessor :remit_to, :from => 'RemitTo', :as => RemitTo
     xml_accessor :ship, :from => 'Ship', :as => Ship
