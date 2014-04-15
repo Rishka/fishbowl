@@ -19,7 +19,7 @@ module Fishbowl::Requests
             xml.UOMID @uom_id
             xml.Cost @cost
             xml.Note @note unless @note.nil?
-            xml.Tracking @tracking unless @tracking.nil?
+            xml << @tracking.to_xml.to_xml unless @tracking.nil?
             xml.LocationTagNum @location_tag_number
             xml.TagNum @tag_number
           }
