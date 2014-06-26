@@ -23,6 +23,8 @@ module Fishbowl # :nodoc:
     @ticket = nil
 
     def initialize(options = {})
+      Rails.logger.info "Fishbowl::Connection#initialize"
+      Rails.logger.info "Fishbowl::Connection#initialize PID #{Process.pid.inspect}"
       raise Errors::MissingHost if options[:host].nil?
 
       @host = options[:host]
@@ -34,12 +36,17 @@ module Fishbowl # :nodoc:
     end
 
     def connect
+      Rails.logger.info "Fishbowl::Connection#connect PID #{Process.pid.inspect}"
       @connection = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
       sockaddr = Socket.sockaddr_in(@port, @host)
 
       begin
+        Rails.logger.info "Fishbowl::Connection#connect"
+        Rails.logger.info "Fishbowl::Connection#connect connection #{@connection.inspect}"
+        Rails.logger.info "Fishbowl::Connection#connect sockaddr #{sockaddr.inspect}"
         @connection.connect_nonblock(sockaddr)
       rescue Errno::EINPROGRESS
+        Rails.logger.info "Fishbowl::Connection#connect Errno::EINPROGRESS"
         if IO.select(nil, [@connection], nil, @connect_timeout)
           retry
         else
@@ -48,6 +55,7 @@ module Fishbowl # :nodoc:
           raise Errors::ConnectionTimeout
         end
       rescue Errno::EISCONN
+        Rails.logger.info "Fishbowl::Connection#connect Errno::EISCONN"
         # connection completed successfully
       end
 
@@ -55,10 +63,16 @@ module Fishbowl # :nodoc:
     end
 
     def connected?
+      Rails.logger.info "Fishbowl::Connection#connected? #{!!@connection.inspect}"
+      Rails.logger.info "Fishbowl::Connection#connected? PID #{Process.pid.inspect}"
       !!@connection
     end
 
     def login(username, password)
+      Rails.logger.info "Fishbowl::Connection#login username #{username.inspect}"
+      Rails.logger.info "Fishbowl::Connection#login password #{password.inspect}"
+      Rails.logger.info "Fishbowl::Connection#login connected? #{connected?.inspect}"
+      Rails.logger.info "Fishbowl::Connection#login PID #{Process.pid.inspect}"
       raise Errors::ConnectionNotEstablished if !connected?
       raise Errors::MissingUsername if username.nil?
       raise Errors::MissingPassword if password.nil?
@@ -73,16 +87,22 @@ module Fishbowl # :nodoc:
       clear_ticket
 
       begin
+        Rails.logger.info "Fishbowl::Connection#login login_request #{login_request.inspect}"
         send_request(login_request)
       rescue
+        Rails.logger.info "Fishbowl::Connection#login rescue"
         clear_ticket
         raise
       end
 
+      Rails.logger.info "Fishbowl::Connection#login self #{self.inspect}"
       self
     end
 
     def send_request(request)
+      Rails.logger.info "Fishbowl::Connection#send_request request #{request.inspect}"
+      Rails.logger.info "Fishbowl::Connection#send_request connected? #{connected?.inspect}"
+      Rails.logger.info "Fishbowl::Connection#send_request PID #{Process.pid.inspect}"
       raise Errors::ConnectionNotEstablished unless connected?
 
       request_builder = request.compose
@@ -91,11 +111,16 @@ module Fishbowl # :nodoc:
       @last_request = request_builder.doc
       @last_response = nil
 
+      Rails.logger.info "Fishbowl::Connection#send_request request_builder #{request_builder.inspect}"
       write(request_builder)
+      Rails.logger.info "Fishbowl::Connection#send_request request #{request.inspect}"
       get_response(request)
     end
 
     def close
+      Rails.logger.info "Fishbowl::Connection#close"
+      Rails.logger.info "Fishbowl::Connection#close connection #{@connection.inspect}"
+      Rails.logger.info "Fishbowl::Connection#close PID #{Process.pid.inspect}"
       @connection.close if @connection
       @connection = nil
       clear_ticket
@@ -103,10 +128,13 @@ module Fishbowl # :nodoc:
     end
 
     def has_ticket?
+      Rails.logger.info "Fishbowl::Connection#close has_ticket? #{!!@ticket.inspect}"
+      Rails.logger.info "Fishbowl::Connection#has_ticket? PID #{Process.pid.inspect}"
       !!@ticket
     end
 
     def clear_ticket
+      Rails.logger.info "Fishbowl::Connection#clear_ticket PID #{Process.pid.inspect}"
       @ticket = nil
     end
 
@@ -117,6 +145,8 @@ module Fishbowl # :nodoc:
       method_name = c.to_s.underscore.to_sym
       if module_constant.is_a?(Class) && !self.method_defined?(method_name)
         define_method method_name do |attributes = {}|
+          Rails.logger.info "Fishbowl::Connection##{method_name} #{attributes.inspect}"
+          Rails.logger.info "Fishbowl::Connection##{method_name} PID #{Process.pid.inspect}"
           request = module_constant.new(attributes)
           send_request(request)
         end
@@ -133,6 +163,9 @@ module Fishbowl # :nodoc:
     # Not sure if the additional ticket information is required
     # on later calls (user ID, etc.)
     def attach_ticket(request_builder)
+      Rails.logger.info "Fishbowl::Connection#attach_ticket #{request_builder.inspect}"
+      Rails.logger.info "Fishbowl::Connection#attach_ticket ticket #{@ticket.inspect}"
+      Rails.logger.info "Fishbowl::Connection#attach_ticket PID #{Process.pid.inspect}"
       if @ticket.nil?
         @ticket = Nokogiri::XML::Node.new('Ticket', request_builder.doc)
       end
@@ -140,14 +173,23 @@ module Fishbowl # :nodoc:
       node = request_builder.doc.xpath('//FbiXml/*').first
       node.add_previous_sibling(@ticket)
 
+      Rails.logger.info "Fishbowl::Connection#attach_ticket node #{node.inspect}"
+
       request_builder
     end
 
     def write(request_builder)
+      Rails.logger.info "Fishbowl::Connection#write PID #{Process.pid.inspect}"
       body = request_builder.to_xml
       size = [body.size].pack("N")
 
       ready = IO.select(nil, [@connection], nil, @write_timeout)
+
+      Rails.logger.info "Fishbowl::Connection#write request_builder #{request_builder.inspect}"
+      Rails.logger.info "Fishbowl::Connection#write body #{body.inspect}"
+      Rails.logger.info "Fishbowl::Connection#write size #{size.inspect}"
+      Rails.logger.info "Fishbowl::Connection#write ready #{ready.inspect}"
+
       raise Errors::ConnectionTimeout if !ready
 
       @connection.write(size)
@@ -156,6 +198,11 @@ module Fishbowl # :nodoc:
 
     def get_response(request)
       ready = IO.select([@connection], nil, nil, @read_timeout)
+
+      Rails.logger.info "Fishbowl::Connection#get_response PID #{Process.pid.inspect}"
+      Rails.logger.info "Fishbowl::Connection#get_response request #{request.inspect}"
+      Rails.logger.info "Fishbowl::Connection#get_response ready #{ready.inspect}"
+
       raise Errors::ConnectionTimeout if !ready
 
       length = @connection.read(4).unpack('N').join('').to_i
@@ -163,6 +210,11 @@ module Fishbowl # :nodoc:
       @last_response = response_doc
 
       _, _, @ticket, response = request.parse_response(response_doc)
+
+      Rails.logger.info "Fishbowl::Connection#get_response length #{length.inspect}"
+      Rails.logger.info "Fishbowl::Connection#get_response response_doc #{response_doc.inspect}"
+      Rails.logger.info "Fishbowl::Connection#get_response last_response #{@last_response.inspect}"
+      Rails.logger.info "Fishbowl::Connection#get_response ticket #{@ticket.inspect}"
 
       response
     end
