@@ -2,6 +2,7 @@ module Fishbowl::Errors
 
   class StatusError < RuntimeError; end;
   class ServerError < RuntimeError; end;
+  class UnknownLoginError < RuntimeError; end;
 
   {
     RuntimeError => ['ConnectionNotEstablished', 'ConnectionTimeout'],
@@ -132,6 +133,8 @@ module Fishbowl::Errors
     case code.to_i
     when 1000
         true
+    when 1100
+        raise UnknownLoginError.new(message)
     when 1001..1999
         raise ServerError.new(message)
     else
