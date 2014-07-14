@@ -7,7 +7,7 @@ module Fishbowl::Requests
 
   class GetInventoryQuantity < BaseRequest
 
-    attr_accessor :part_number, :last_modified_from, :last_modified_to
+    attr_accessor :part_number, :last_modified_from, :last_modified_to, :light_list
 
     def compose
       validate
@@ -29,7 +29,11 @@ module Fishbowl::Requests
     end
 
     def distill(response_doc)
-      response_doc.xpath('//InvQty').map { |n| Fishbowl::Objects::InventoryQuantity.from_xml(n) }
+      if @light_list == true
+        response_doc.xpath('//InvQty').map { |n| Fishbowl::Objects::LightInventoryQuantity.from_xml(n) }
+      else
+        response_doc.xpath('//InvQty').map { |n| Fishbowl::Objects::InventoryQuantity.from_xml(n) }
+      end
     end
 
   end
