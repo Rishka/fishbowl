@@ -37,7 +37,7 @@ module Fishbowl::Requests
   protected
 
     def distill(response_doc)
-      #response_doc.xpath('//Customer').map { |n| Fishbowl::Objects::Customer.from_xml(n) }
+      response_doc.xpath('//LightPart').map { |n| Fishbowl::Objects::LightPart.from_xml(n) }
     end
 
   end

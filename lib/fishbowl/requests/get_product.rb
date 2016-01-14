@@ -11,7 +11,7 @@ module Fishbowl::Requests
       envelope(Nokogiri::XML::Builder.new do |xml|
         xml.request {
           xml.ProductQueryRq {
-            xml.ProductNum @product_num
+            xml.ProductNum @product_num unless @product_num.nil?
             xml.GetImage @get_image if @get_image
           }
         }
