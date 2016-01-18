@@ -1,7 +1,14 @@
 module Fishbowl::Errors
 
-  class StatusError < RuntimeError; end;
-  class ServerError < RuntimeError; end;
+  class FbError < RuntimeError
+    attr_reader :code
+    def initialize code
+      @code = code
+    end
+  end
+
+  class StatusError < FbError; end;
+  class ServerError < FbError; end;
 
   {
     RuntimeError => ['ConnectionNotEstablished', 'ConnectionTimeout'],
@@ -131,11 +138,11 @@ module Fishbowl::Errors
     message = STATUS_MAP[code.to_i] if message.nil?
     case code.to_i
     when 1000
-        true
+      true
     when 1001..1999
-        raise ServerError.new(message)
+      raise ServerError.new(code.to_i), message
     else
-        raise StatusError.new(message)
+      raise StatusError.new(code.to_i), message
     end
   end
 end
