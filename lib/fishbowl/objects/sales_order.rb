@@ -53,7 +53,7 @@ module Fishbowl::Objects
     xml_accessor :item_adjust_id, :from => 'ItemAdjustID', :as => Integer
     xml_accessor :qty_fulfilled, :from => 'QtyFulfilled', :as => Integer
     xml_accessor :qty_picked, :from => 'QtyPicked', :as => Integer
-    xml_accessor :revision_level, :from => 'RevisionLevel', :as => Integer
+    xml_accessor :revision_level, :from => 'RevisionLevel'
     xml_accessor :total_cost, :from => 'TotalCost', :as => Float
     xml_accessor :tax_id, :from => 'TaxID', :as => Integer
     xml_accessor :tax_rate, :from => 'TaxRate', :as => Float
