@@ -27,7 +27,7 @@ module Fishbowl::Requests
 
       hashes = []
       rows.each do |row|
-        hashes << OpenStruct.new(CSV.parse_line(row.content.encode('UTF-8', invalid: :replace), headers: headers).to_hash)
+        hashes << OpenStruct.new(CSV.parse_line(row.content.encode('UTF-8', {invalid: :replace, undef: :replace, replace: ''}), headers: headers).to_hash)
       end
 
       hashes
