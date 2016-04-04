@@ -69,7 +69,7 @@ module Fishbowl # :nodoc:
       !!@connection
     end
 
-    def login(username, password)
+    def login(username, password, opts={})
       Rails.logger.info "Fishbowl::Connection#login username #{username.inspect}"
       Rails.logger.info "Fishbowl::Connection#login password #{password.inspect}"
       Rails.logger.info "Fishbowl::Connection#login connected? #{connected?.inspect}"
@@ -82,7 +82,8 @@ module Fishbowl # :nodoc:
 
       login_request = Requests::Login.new(
         :username => username,
-        :password => password
+        :password => password,
+        :opts => opts
       )
 
       clear_ticket
