@@ -36,11 +36,11 @@ class FakeTCPSocket
 end
 
 def mock_tcp_connection
-  TCPSocket.stub(:new).and_return {
+  TCPSocket.stub(:new) {
     FakeTCPSocket.instance
   }
 end
 
 def unmock_tcp
-  TCPSocket.stub(:new).and_return { TCP_NEW.call }
+  TCPSocket.stub(:new).and_call_original
 end

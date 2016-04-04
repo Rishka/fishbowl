@@ -16,7 +16,7 @@ module Fishbowl # :nodoc:
 
   class Connection
 
-    attr_accessor :host, :port, :username, :password
+    attr_accessor :host, :port, :username, :password, :encoding
     attr_reader :last_request, :last_response
 
     @connection = nil
@@ -33,6 +33,7 @@ module Fishbowl # :nodoc:
       @connect_timeout = options[:connect_timeout] || 5.0
       @read_timeout = options[:read_timeout] || 30.0
       @write_timeout = options[:write_timeout] || 5.0
+      @encoding = "UTF-8"
     end
 
     def connect
@@ -206,7 +207,7 @@ module Fishbowl # :nodoc:
       raise Errors::ConnectionTimeout if !ready
 
       length = @connection.read(4).unpack('N').join('').to_i
-      response_doc = Nokogiri::XML.parse(@connection.read(length))
+      response_doc = Nokogiri::XML.parse(@connection.read(length), nil, @encoding)
       @last_response = response_doc
 
       _, _, @ticket, response = request.parse_response(response_doc)

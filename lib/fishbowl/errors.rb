@@ -4,6 +4,13 @@ module Fishbowl::Errors
   class ServerError < RuntimeError; end;
   class UnknownLoginError < RuntimeError; end;
 
+  class FbError < RuntimeError
+    attr_reader :code
+    def initialize code
+      @code = code
+    end
+  end
+
   {
     RuntimeError => ['ConnectionNotEstablished', 'ConnectionTimeout'],
     ArgumentError => ['Host', 'Username', 'Password'].map { |p| "Missing#{p}" }
@@ -136,9 +143,9 @@ module Fishbowl::Errors
     when 1100
         raise UnknownLoginError.new(message)
     when 1001..1999
-        raise ServerError.new(message)
+      raise ServerError.new(code.to_i), message
     else
-        raise StatusError.new(message)
+      raise StatusError.new(code.to_i), message
     end
   end
 end

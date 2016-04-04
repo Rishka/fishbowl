@@ -6,7 +6,7 @@ module Fishbowl::Requests
 
   class GetSalesOrderList < BaseRequest
 
-    attr_accessor :so_num
+    attr_accessor :so_num, :product_num, :date_last_modified_begin, :date_last_modified_end
 
     def compose
       validate
@@ -14,6 +14,9 @@ module Fishbowl::Requests
         xml.request {
           xml.GetSOListRq {
             xml.SONum @so_num unless @so_num.nil?
+            xml.ProductNum @product_num unless @product_num.nil?
+            xml.DateLastModifiedBegin @date_last_modified_begin unless @date_last_modified_begin.nil?
+            xml.DateLastModifiedEnd @date_last_modified_end unless @date_last_modified_end.nil?
           }
         }
       end)
