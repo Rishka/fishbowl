@@ -12,7 +12,7 @@ module Fishbowl::Requests
   protected
 
     def distill(response_doc)
-      response_doc.xpath('//Customer/Name').map { |n| n.text }
+      response_doc.xpath('//Customers/Name').map { |n| n.text }
     end
 
   end
